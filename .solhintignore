@@ -1,0 +1,6 @@
+**/artifacts
+**/cache
+**/node_modules
+**/fhevm-hardhat-template
+**/output
+**/test-output
