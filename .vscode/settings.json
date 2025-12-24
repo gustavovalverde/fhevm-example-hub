@@ -29,8 +29,7 @@
   "search.exclude": {
     "**/node_modules": true,
     "**/artifacts": true,
-    "**/cache": true,
-    "bun.lockb": true
+    "**/cache": true
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,

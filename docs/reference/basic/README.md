@@ -1,0 +1,20 @@
+# Basic Reference
+
+- [AntiPatternMissingAllowThis](./AntiPatternMissingAllowThis.md)
+- [AntiPatternMissingUserAllow](./AntiPatternMissingUserAllow.md)
+- [AntiPatternViewOnEncrypted](./AntiPatternViewOnEncrypted.md)
+- [EncryptMultipleValues](./EncryptMultipleValues.md)
+- [EncryptSingleValue](./EncryptSingleValue.md)
+- [FHEAdd](./FHEAdd.md)
+- [FHECounter](./FHECounter.md)
+- [FHEEq](./FHEEq.md)
+- [FHEIfThenElse](./FHEIfThenElse.md)
+- [FHESub](./FHESub.md)
+- [HandleGeneration](./HandleGeneration.md)
+- [HandleLifecycle](./HandleLifecycle.md)
+- [InputProofsExplained](./InputProofsExplained.md)
+- [PublicDecryptMultipleValues](./PublicDecryptMultipleValues.md)
+- [PublicDecryptSingleValue](./PublicDecryptSingleValue.md)
+- [UserDecryptMultipleValues](./UserDecryptMultipleValues.md)
+- [UserDecryptSingleValue](./UserDecryptSingleValue.md)
+

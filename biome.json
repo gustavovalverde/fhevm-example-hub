@@ -14,6 +14,7 @@
       "!**/node_modules",
       "!**/typechain-types",
       "!**/fhevm-hardhat-template",
+      "!**/base-template",
       "!**/output",
       "!**/test-output"
     ]

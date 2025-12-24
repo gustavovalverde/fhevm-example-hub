@@ -1,0 +1,22 @@
+# {{name}}
+
+{{#if natspec.custom}}
+> {{#if natspec.custom.category}}**Category**: {{natspec.custom.category}}{{/if}}{{#if natspec.custom.difficulty}} | **Difficulty**: {{natspec.custom.difficulty}}{{/if}}{{#if natspec.custom.chapter}} | **Chapters**: {{natspec.custom.chapter}}{{/if}}{{#if natspec.custom.concept}} | **Concept**: {{natspec.custom.concept}}{{/if}}
+{{/if}}
+
+## Overview
+
+{{{natspec.notice}}}
+
+{{#if natspec.dev}}
+### Developer Notes
+
+{{{natspec.dev}}}
+{{/if}}
+
+{{#each items}}
+{{#hsection}}
+{{>item}}
+{{/hsection}}
+
+{{/each}}

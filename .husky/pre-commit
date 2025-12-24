@@ -1,1 +1,22 @@
-bun lint-staged
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npx lint-staged
+
+if command -v rg >/dev/null 2>&1; then
+  git diff --cached --name-only | rg -q "^(contracts|test|scripts|templates|docs|package.json|package-lock.json)"
+  HAS_DOC_INPUT=$?
+else
+  git diff --cached --name-only | grep -E -q "^(contracts|test|scripts|templates|docs|package.json|package-lock.json)"
+  HAS_DOC_INPUT=$?
+fi
+
+if [ "$HAS_DOC_INPUT" -eq 0 ]; then
+  echo "Checking generated docs..."
+  npm run docs
+  if ! git diff --quiet -- docs docs/reference; then
+    echo "Docs are out of date. Regenerate and stage docs before committing."
+    git status --short docs docs/reference
+    exit 1
+  fi
+fi

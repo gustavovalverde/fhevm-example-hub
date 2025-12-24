@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+cache/
+artifacts/
+typechain-types/
+fhevmTemp/
+
+# Environment
+.env
+.env.local
+
+# IDE (keep .vscode configs in repo)
+.idea/
+*.swp
+
+# OS
+.DS_Store
+
+# Generated examples (keep structure)
+test-output/
+output/
+
+# Husky internal
+.husky/_

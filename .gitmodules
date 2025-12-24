@@ -1,3 +1,4 @@
-[submodule "fhevm-hardhat-template"]
-	path = fhevm-hardhat-template
+[submodule "base-template"]
+	path = base-template
 	url = https://github.com/zama-ai/fhevm-hardhat-template.git
+
