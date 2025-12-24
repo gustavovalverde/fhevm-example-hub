@@ -18,6 +18,8 @@ npm run test:mocked -- test/identity/FullFlow.test.ts
 ## Dependencies
 
 - [IdentityRegistry](IdentityRegistry.md)
+- IIdentityRegistry
+- [CompliantERC20](CompliantERC20.md)
 
 ## Deployment plan
 
@@ -54,7 +56,7 @@ import {IIdentityRegistry} from "./IIdentityRegistry.sol";
  * @custom:chapter compliance
  * @custom:concept Combining encrypted compliance checks with FHE.and()
  * @custom:difficulty intermediate
- * @custom:depends-on IdentityRegistry
+ * @custom:depends-on IdentityRegistry,IIdentityRegistry,CompliantERC20
  * @custom:deploy-plan [{"contract":"IdentityRegistry","saveAs":"registry"},{"contract":"ComplianceRules","saveAs":"complianceRules","args":["@registry",1]},{"contract":"CompliantERC20","saveAs":"token","args":["Compliant Token","CPL","@complianceRules"],"afterDeploy":["await complianceRules.setAuthorizedCaller(await token.getAddress(), true);","console.log(\"Authorized CompliantERC20 as compliance caller:\", await token.getAddress());"]}]
  *
  * This contract aggregates compliance checks from IdentityRegistry and returns

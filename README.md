@@ -6,21 +6,29 @@ A multi-category repository of standalone fhEVM examples demonstrating privacy-p
 
 This repository is the main fhEVM examples hub. Each example is a small, focused contract + test you can run, study, and reuse. Examples are organized by category so you can pick the level and topic that fits your goal.
 
+## Quick Start
+
+```bash
+npm install
+npm run ensure-template
+npm run examples
+npm run create fhe-counter ./output/fhe-counter
+```
+
 ## Start Here (Docs)
 
 If you're new or want a guided path, begin with:
 
-- `docs/start-here.md`
-- `docs/fhe-101.md`
-- `docs/learning-paths.md`
+- [docs/start-here.md](docs/start-here.md)
+- [docs/fhe-101.md](docs/fhe-101.md)
+- [docs/learning-paths.md](docs/learning-paths.md)
 
-## Contributor Docs
+## Categories
 
-- `CONTRIBUTING.md`
-
-## OpenZeppelin Confidential Contracts
-
-Several examples use OpenZeppelin Confidential Contracts (`@openzeppelin/confidential-contracts@0.3.0`) to demonstrate ERC7984-based identity/compliance flows (public KYC allowlists, observers, ERC20 wrapping, swaps, and confidential vesting).
+- **Basic**: Core FHE operations and anti-patterns.
+- **Identity**: ERC7984, compliance, access control, and swaps.
+- **Auctions**: Sealed-bid and Dutch auction patterns.
+- **Games**: Example game logic with encrypted feedback.
 
 ## Available Examples
 
@@ -42,7 +50,7 @@ Several examples use OpenZeppelin Confidential Contracts (`@openzeppelin/confide
 | `input-proofs-explained` | Input proof binding to contract + sender | Intermediate |
 | `handle-lifecycle` | Reusing encrypted handles safely | Intermediate |
 | `handle-generation` | Handle creation and derived handles | Intermediate |
-| `anti-pattern-missing-allowthis` | Missing `FHE.allowThis` pitfall | Intermediate |
+| `anti-pattern-missing-allow-this` | Missing `FHE.allowThis` pitfall | Intermediate |
 | `anti-pattern-missing-user-allow` | Missing `FHE.allow(user)` pitfall | Intermediate |
 | `anti-pattern-view-on-encrypted` | View functions still return encrypted handles | Intermediate |
 
@@ -51,7 +59,7 @@ Several examples use OpenZeppelin Confidential Contracts (`@openzeppelin/confide
 | Example | Concept | Difficulty |
 |---------|---------|------------|
 | `encrypted-age-verification` | `FHE.le()` for threshold without revealing age | Beginner |
-| `erc7984-example` | Minimal ERC7984 confidential token example | Beginner |
+| `erc7984` | Minimal ERC7984 confidential token example | Beginner |
 | `identity-registry` | Encrypted identity registry with access-gated getters | Intermediate |
 | `access-control-grants` | User-controlled `FHE.allow()` permissions | Intermediate |
 | `compliance-rules` | Encrypted compliance aggregation + caching | Intermediate |
@@ -77,59 +85,11 @@ Several examples use OpenZeppelin Confidential Contracts (`@openzeppelin/confide
 |---------|---------|------------|
 | `fhe-wordle` | Encrypted letter comparison with branch-free feedback | Intermediate |
 
-## Quick Start
+## OpenZeppelin Confidential Contracts
 
-### First-time Setup
+Several examples use OpenZeppelin Confidential Contracts (`@openzeppelin/confidential-contracts@0.3.0`) to demonstrate ERC7984-based identity/compliance flows (public KYC allowlists, observers, ERC20 wrapping, swaps, and confidential vesting).
 
-```bash
-# Install dependencies
-npm install
-
-# Ensure the Hardhat template is present
-npm run ensure-template
-```
-
-### Help
-
-```bash
-npm run help
-```
-
-### Run an Example Locally
-
-```bash
-# Install dependencies
-npm install
-
-# Run tests (mocked mode)
-npm run test:mocked
-```
-
-### Generate Documentation
-
-```bash
-# Generate all documentation (runs hardhat docgen + GitBook summary)
-npm run docs
-
-# Generate docs for a single example
-npm run docs:one -- fhe-counter
-```
-
-### Create Standalone Example
-
-```bash
-# Generate a forkable standalone repository
-npm run create encrypted-age-verification ./output/age-verification
-```
-
-### One-command Quickstart
-
-```bash
-# Ensures template, generates a sample repo, installs deps, runs tests
-npm run quickstart
-```
-
-### Common Commands (at a glance)
+## Common Commands (at a glance)
 
 ```text
 fhEVM Example Hub
@@ -142,12 +102,17 @@ Common commands
   npm run categories                     # list categories
   npm run docs                           # regenerate all docs
   npm run docs:one -- <slug>             # regenerate docs for one example
+  npm run catalog                        # generate docs/catalog.json
+  npm run validate:all                   # generate + test all examples
+  npm run validate:scratch               # full setup + verify + docs + smoke checks
+  npm run clean:generated                # remove generated outputs
   npm run verify                         # lint + typecheck + compile + test
   npm run check                          # lint + typecheck + compile (no tests)
   npm run fix                            # autofix formatting + lint
+  npm run help                           # show command help
 ```
 
-### Template Setup (if needed)
+## Template Setup (if needed)
 
 The generators scaffold from a Hardhat template directory. If you cloned this repo without the template (e.g. ZIP download or missing submodules), run:
 
@@ -159,17 +124,6 @@ If you are cloning with git, prefer:
 
 ```bash
 git clone --recurse-submodules <repo-url>
-```
-
-## For Contributors
-
-```bash
-# Full verification (lint + typecheck + test)
-npm run verify
-
-# From scratch: initializes submodules if needed, reinstalls deps, runs verify,
-# regenerates docs, and smoke-tests a couple generated standalone repos.
-npm run validate:scratch
 ```
 
 ## Project Structure
@@ -195,9 +149,15 @@ fhevm-example-hub/
 └── output/                           # Generated standalone examples
 ```
 
+## Generated Outputs
+
+- `docs/reference/`, `docs/<category>/`, `docs/SUMMARY.md`, and `docs/catalog.json` are generated and committed for publishing.
+- `docs/start-here.md`, `docs/fhe-101.md`, and `docs/learning-paths.md` are curated source docs.
+- `output/` contains generated standalone repos and stays in `.gitignore`.
+
 ## Contributing
 
-See `CONTRIBUTING.md` for how to add new examples, update dependencies, and validate generated standalone repos.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to add new examples, update dependencies, and validate generated standalone repos.
 
 ## Key Concepts Demonstrated
 
@@ -245,4 +205,3 @@ MIT
 ## Resources
 
 - [Zama fhEVM Documentation](https://docs.zama.ai/fhevm)
-- [Zama Developer Program](https://www.zama.ai/programs/developer-program)

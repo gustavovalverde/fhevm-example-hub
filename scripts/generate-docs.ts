@@ -37,8 +37,10 @@ if (forceAll || !exampleArg) {
   run("npm", ["run", "docgen"]);
   run("tsx", ["scripts/generate-gitbook.ts", "--all"]);
   run("tsx", ["scripts/generate-summary.ts"]);
+  run("tsx", ["scripts/generate-catalog.ts"]);
   process.exit(0);
 }
 
 run("tsx", ["scripts/generate-gitbook.ts", "--example", exampleArg]);
 run("tsx", ["scripts/generate-summary.ts"]);
+run("tsx", ["scripts/generate-catalog.ts"]);

@@ -8,6 +8,9 @@ Common commands
   npm run categories                     # list categories
   npm run docs                           # regenerate all docs
   npm run docs:one -- <slug>             # regenerate docs for one example
+  npm run catalog                        # generate docs/catalog.json
+  npm run validate:all                   # generate + test all examples
+  npm run clean:generated                # remove generated outputs
   npm run verify                         # lint + typecheck + compile + test
   npm run check                          # lint + typecheck + compile (no tests)
   npm run fix                            # autofix formatting + lint

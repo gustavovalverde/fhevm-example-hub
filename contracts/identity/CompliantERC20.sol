@@ -16,7 +16,7 @@ import {ZamaEthereumConfig} from "@fhevm/solidity/config/ZamaConfig.sol";
  * @custom:chapter compliance
  * @custom:concept FHE.select() for branch-free compliant transfers
  * @custom:difficulty advanced
- * @custom:depends-on IdentityRegistry,ComplianceRules
+ * @custom:depends-on IdentityRegistry,IIdentityRegistry,ComplianceRules
  * @custom:deploy-plan [{"contract":"IdentityRegistry","saveAs":"registry"},{"contract":"ComplianceRules","saveAs":"complianceRules","args":["@registry",1]},{"contract":"CompliantERC20","saveAs":"token","args":["Compliant Token","CPL","@complianceRules"],"afterDeploy":["await complianceRules.setAuthorizedCaller(await token.getAddress(), true);","console.log(\"Authorized CompliantERC20 as compliance caller:\", await token.getAddress());"]}]
  *
  * This contract implements a compliant token with encrypted balances.

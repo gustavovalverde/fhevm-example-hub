@@ -214,6 +214,9 @@ This:
 | `npm run create:category` | Create a category bundle with multiple examples |
 | `npm run examples` | List example slugs |
 | `npm run categories` | List categories |
+| `npm run catalog` | Generate docs/catalog.json |
+| `npm run validate:all` | Generate and test all examples |
+| `npm run clean:generated` | Remove generated outputs |
 | `npm run quickstart` | One-command example generation + test |
 | `npm run help` | Print common commands |
 | `npm run ensure-template` | Ensure `base-template/` exists (submodule init or clone fallback) |

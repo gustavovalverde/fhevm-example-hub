@@ -1,0 +1,256 @@
+{
+  "generatedAt": "2025-12-24T17:55:55.966Z",
+  "categories": [
+    {
+      "name": "identity",
+      "examples": [
+        {
+          "slug": "access-control-grants",
+          "title": "AccessControlGrants",
+          "concept": "User-controlled FHE.allow() permissions",
+          "difficulty": "Intermediate",
+          "docPath": "identity/AccessControlGrants.md"
+        },
+        {
+          "slug": "compliance-rules",
+          "title": "ComplianceRules",
+          "concept": "Combining encrypted compliance checks with FHE.and()",
+          "difficulty": "Intermediate",
+          "docPath": "identity/ComplianceRules.md"
+        },
+        {
+          "slug": "compliant-erc20",
+          "title": "CompliantERC20",
+          "concept": "FHE.select() for branch-free compliant transfers",
+          "difficulty": "Advanced",
+          "docPath": "identity/CompliantERC20.md"
+        },
+        {
+          "slug": "encrypted-age-verification",
+          "title": "EncryptedAgeVerification",
+          "concept": "FHE comparison (le, ge) for threshold checks without revealing values",
+          "difficulty": "Beginner",
+          "docPath": "identity/EncryptedAgeVerification.md"
+        },
+        {
+          "slug": "erc7984",
+          "title": "ERC7984Example",
+          "concept": "Minimal ERC7984 token with confidential mint + transfer",
+          "difficulty": "Beginner",
+          "docPath": "identity/ERC7984Example.md"
+        },
+        {
+          "slug": "erc7984-erc20-wrapper",
+          "title": "ERC7984ERC20WrapperExample",
+          "concept": "ERC7984ERC20Wrapper (ERC20 ↔ ERC7984) + KYC-gated wrap/unwrap",
+          "difficulty": "Advanced",
+          "docPath": "identity/ERC7984ERC20WrapperExample.md"
+        },
+        {
+          "slug": "erc7984-kyc-restricted",
+          "title": "ERC7984KycRestricted",
+          "concept": "OpenZeppelin ERC7984Restricted + public KYC allowlist (revert-based compliance)",
+          "difficulty": "Intermediate",
+          "docPath": "identity/ERC7984KycRestricted.md"
+        },
+        {
+          "slug": "erc7984-observer-access",
+          "title": "ERC7984ObserverAccessExample",
+          "concept": "ERC7984ObserverAccess for opt-in audit / compliance observers",
+          "difficulty": "Intermediate",
+          "docPath": "identity/ERC7984ObserverAccessExample.md"
+        },
+        {
+          "slug": "identity-registry",
+          "title": "IdentityRegistry",
+          "concept": "Storing encrypted identity attributes (euint8, euint16, ebool)",
+          "difficulty": "Intermediate",
+          "docPath": "identity/IdentityRegistry.md"
+        },
+        {
+          "slug": "swap-erc7984-to-erc20",
+          "title": "SwapERC7984ToERC20",
+          "concept": "ERC7984 → ERC20 swap using public decryption + FHE.checkSignatures (KYC is public)",
+          "difficulty": "Advanced",
+          "docPath": "identity/SwapERC7984ToERC20.md"
+        },
+        {
+          "slug": "swap-erc7984-to-erc7984",
+          "title": "SwapERC7984ToERC7984",
+          "concept": "ERC7984 → ERC7984 swap using FHE.allowTransient across token contracts (KYC is public)",
+          "difficulty": "Intermediate",
+          "docPath": "identity/SwapERC7984ToERC7984.md"
+        },
+        {
+          "slug": "transient-access-control",
+          "title": "TransientAccessControl",
+          "concept": "FHE.allowTransient() for one-transaction permissions between contracts",
+          "difficulty": "Intermediate",
+          "docPath": "identity/TransientAccessControl.md"
+        },
+        {
+          "slug": "vesting-wallet-confidential",
+          "title": "VestingWalletConfidentialExample",
+          "concept": "Confidential vesting (ERC7984) + public KYC gating + factory/clones",
+          "difficulty": "Advanced",
+          "docPath": "identity/VestingWalletConfidentialExample.md"
+        }
+      ]
+    },
+    {
+      "name": "basic",
+      "examples": [
+        {
+          "slug": "anti-pattern-missing-allow-this",
+          "title": "AntiPatternMissingAllowThis",
+          "concept": "Missing FHE.allowThis breaks reuse of stored handles",
+          "difficulty": "Intermediate",
+          "docPath": "basic/AntiPatternMissingAllowThis.md"
+        },
+        {
+          "slug": "anti-pattern-missing-user-allow",
+          "title": "AntiPatternMissingUserAllow",
+          "concept": "Missing FHE.allow(user) blocks user decryption",
+          "difficulty": "Intermediate",
+          "docPath": "basic/AntiPatternMissingUserAllow.md"
+        },
+        {
+          "slug": "anti-pattern-view-on-encrypted",
+          "title": "AntiPatternViewOnEncrypted",
+          "concept": "View functions return encrypted handles, not plaintext",
+          "difficulty": "Intermediate",
+          "docPath": "basic/AntiPatternViewOnEncrypted.md"
+        },
+        {
+          "slug": "encrypt-multiple-values",
+          "title": "EncryptMultipleValues",
+          "concept": "Store multiple encrypted values with a single proof",
+          "difficulty": "Beginner",
+          "docPath": "basic/EncryptMultipleValues.md"
+        },
+        {
+          "slug": "encrypt-single-value",
+          "title": "EncryptSingleValue",
+          "concept": "Store one encrypted value and grant permissions",
+          "difficulty": "Beginner",
+          "docPath": "basic/EncryptSingleValue.md"
+        },
+        {
+          "slug": "fhe-add",
+          "title": "FHEAdd",
+          "concept": "Add two encrypted values with FHE.add",
+          "difficulty": "Beginner",
+          "docPath": "basic/FHEAdd.md"
+        },
+        {
+          "slug": "fhe-counter",
+          "title": "FHECounter",
+          "concept": "Encrypted counter using FHE.add and FHE.sub",
+          "difficulty": "Beginner",
+          "docPath": "basic/FHECounter.md"
+        },
+        {
+          "slug": "fhe-eq",
+          "title": "FHEEq",
+          "concept": "Compare two encrypted values using FHE.eq",
+          "difficulty": "Beginner",
+          "docPath": "basic/FHEEq.md"
+        },
+        {
+          "slug": "fhe-if-then-else",
+          "title": "FHEIfThenElse",
+          "concept": "Conditional selection on encrypted values using FHE.select",
+          "difficulty": "Beginner",
+          "docPath": "basic/FHEIfThenElse.md"
+        },
+        {
+          "slug": "fhe-sub",
+          "title": "FHESub",
+          "concept": "Subtract two encrypted values with FHE.sub",
+          "difficulty": "Beginner",
+          "docPath": "basic/FHESub.md"
+        },
+        {
+          "slug": "handle-generation",
+          "title": "HandleGeneration",
+          "concept": "Handles are opaque references; FHE ops create derived handles (symbolic execution)",
+          "difficulty": "Intermediate",
+          "docPath": "basic/HandleGeneration.md"
+        },
+        {
+          "slug": "handle-lifecycle",
+          "title": "HandleLifecycle",
+          "concept": "Store encrypted handles and reuse them across calls",
+          "difficulty": "Intermediate",
+          "docPath": "basic/HandleLifecycle.md"
+        },
+        {
+          "slug": "input-proofs-explained",
+          "title": "InputProofsExplained",
+          "concept": "Input proofs bind encrypted inputs to a contract and sender",
+          "difficulty": "Intermediate",
+          "docPath": "basic/InputProofsExplained.md"
+        },
+        {
+          "slug": "public-decrypt-multiple-values",
+          "title": "PublicDecryptMultipleValues",
+          "concept": "Public decryption flow for multiple encrypted values",
+          "difficulty": "Intermediate",
+          "docPath": "basic/PublicDecryptMultipleValues.md"
+        },
+        {
+          "slug": "public-decrypt-single-value",
+          "title": "PublicDecryptSingleValue",
+          "concept": "Public decryption flow for a single encrypted value",
+          "difficulty": "Intermediate",
+          "docPath": "basic/PublicDecryptSingleValue.md"
+        },
+        {
+          "slug": "user-decrypt-multiple-values",
+          "title": "UserDecryptMultipleValues",
+          "concept": "User decryption flow for multiple encrypted results",
+          "difficulty": "Beginner",
+          "docPath": "basic/UserDecryptMultipleValues.md"
+        },
+        {
+          "slug": "user-decrypt-single-value",
+          "title": "UserDecryptSingleValue",
+          "concept": "User decryption flow for a single encrypted result",
+          "difficulty": "Beginner",
+          "docPath": "basic/UserDecryptSingleValue.md"
+        }
+      ]
+    },
+    {
+      "name": "auctions",
+      "examples": [
+        {
+          "slug": "blind-auction",
+          "title": "BlindAuction",
+          "concept": "Sealed-bid auction with encrypted bids and public reveal",
+          "difficulty": "Advanced",
+          "docPath": "auctions/BlindAuction.md"
+        },
+        {
+          "slug": "dutch-auction",
+          "title": "DutchAuction",
+          "concept": "Dutch auction with descending price and encrypted reserve",
+          "difficulty": "Intermediate",
+          "docPath": "auctions/DutchAuction.md"
+        }
+      ]
+    },
+    {
+      "name": "games",
+      "examples": [
+        {
+          "slug": "fhe-wordle",
+          "title": "FHEWordle",
+          "concept": "Encrypted letter comparison with branch-free feedback",
+          "difficulty": "Intermediate",
+          "docPath": "games/FHEWordle.md"
+        }
+      ]
+    }
+  ]
+}

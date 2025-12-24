@@ -19,6 +19,7 @@ npm run test:mocked -- test/auctions/BlindAuction.test.ts
 
 - AuctionPaymentToken
 - PrizeItem
+- [PublicDecryptSingleValue](../basic/PublicDecryptSingleValue.md)
 
 ## Deployment plan
 
@@ -57,7 +58,7 @@ import {ERC7984} from "@openzeppelin/confidential-contracts/token/ERC7984/ERC798
  * @custom:chapter auctions
  * @custom:concept Sealed-bid auction with encrypted bids and public reveal
  * @custom:difficulty advanced
- * @custom:depends-on AuctionPaymentToken,PrizeItem
+ * @custom:depends-on AuctionPaymentToken,PrizeItem,PublicDecryptSingleValue
  * @custom:deploy-plan [{"contract":"PrizeItem","saveAs":"prizeItem"},{"contract":"AuctionPaymentToken","saveAs":"paymentToken","args":["$deployer","Auction USD","AUSD",""]},{"contract":"BlindAuction","saveAs":"auction","args":["@prizeItem","@paymentToken",0,"#Math.floor(Date.now()/1000)","#Math.floor(Date.now()/1000)+3600"],"afterDeploy":["await prizeItem.approve(await auction.getAddress(), 0);","await auction.depositPrize();"]}]
  */
 contract BlindAuction is ZamaEthereumConfig, ReentrancyGuard {

@@ -474,6 +474,11 @@ function copyFileToDir(src: string, destDir: string) {
   fs.copyFileSync(src, destPath);
 }
 
+function removeDirIfExists(dirPath: string) {
+  if (!fs.existsSync(dirPath)) return;
+  fs.rmSync(dirPath, { recursive: true, force: true });
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const rootDir = path.resolve(__dirname, "..");
@@ -525,6 +530,10 @@ async function main() {
     // Scaffold from shared base template first.
     fs.mkdirSync(exampleDir, { recursive: true });
     copyBaseTemplate(rootDir, exampleDir);
+
+    // Remove template example contract/tests to avoid duplicates.
+    removeDirIfExists(path.join(exampleDir, "contracts"));
+    removeDirIfExists(path.join(exampleDir, "test"));
 
     fs.mkdirSync(path.join(exampleDir, "contracts"), { recursive: true });
     fs.mkdirSync(path.join(exampleDir, "test"), { recursive: true });

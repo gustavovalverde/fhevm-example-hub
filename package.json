@@ -31,6 +31,9 @@
     "docs:one": "tsx scripts/generate-docs.ts",
     "help": "tsx scripts/help.ts",
     "quickstart": "tsx scripts/quickstart.ts",
+    "catalog": "tsx scripts/generate-catalog.ts",
+    "validate:all": "tsx scripts/validate-all.ts",
+    "clean:generated": "tsx scripts/cleanup.ts",
     "update-deps": "tsx scripts/update-deps.ts",
     "update-deps:apply": "tsx scripts/update-deps.ts --apply",
     "prepare": "husky"
