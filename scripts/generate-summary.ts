@@ -1,17 +1,61 @@
 /**
  * @title Generate SUMMARY.md
- * @description Generates GitBook SUMMARY.md from discovered examples
+ * @description Generates GitBook SUMMARY.md by scanning the docs/ directory.
+ *
+ * KEY PRINCIPLE: File-driven, not registry-driven.
+ * - Scans actual files in docs/
+ * - Extracts titles from H1 headers
+ * - No hardcoded slugs or titles
  */
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { loadExampleRegistry } from "./example-registry";
 
 const rootDir = path.resolve(__dirname, "..");
 const docsDir = path.join(rootDir, "docs");
-const referenceDir = path.join(docsDir, "reference");
-const registry = loadExampleRegistry(rootDir);
 
+// Folders that are NOT categories (special purpose folders)
+const NON_CATEGORY_FOLDERS = new Set(["chapters", "reference"]);
+
+// Files to exclude from navigation
+const EXCLUDED_FILES = ["README.md", "SUMMARY.md", "catalog.json"];
+
+/**
+ * Discover category folders by scanning docs/ directory.
+ * Categories are any folder that isn't in NON_CATEGORY_FOLDERS.
+ */
+function discoverCategories(): string[] {
+  return fs
+    .readdirSync(docsDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .filter((entry) => !NON_CATEGORY_FOLDERS.has(entry.name))
+    .map((entry) => entry.name)
+    .sort();
+}
+
+/**
+ * Extract H1 title from markdown content
+ */
+function extractH1(content: string): string | null {
+  const match = content.match(/^#\s+(.+)$/m);
+  return match?.[1]?.trim() ?? null;
+}
+
+/**
+ * Get title from a markdown file (extracted from H1 header)
+ */
+function getTitleFromFile(filePath: string, fallback: string): string {
+  try {
+    const content = fs.readFileSync(filePath, "utf8");
+    return extractH1(content) ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+/**
+ * Convert a string to title case
+ */
 function titleCase(value: string): string {
   if (value.length === 0) return value;
   return value
@@ -20,160 +64,101 @@ function titleCase(value: string): string {
     .join(" ");
 }
 
-const categoryLinks = Array.from(registry.categories.entries())
-  .sort(([a], [b]) => a.localeCompare(b))
-  .map(([category, examples]) => {
-    const categoryTitle = titleCase(category);
-    const exampleLinks = examples
-      .map((example) => `  * [${example.title}](${category}/${example.docName}.md)`)
-      .join("\n");
+/**
+ * Scan root-level static pages (excluding categories, chapters, reference)
+ */
+function scanStaticPages(): string[] {
+  const entries: string[] = [];
+  const files = fs.readdirSync(docsDir, { withFileTypes: true });
 
-    return `* [${categoryTitle} Examples](${category}/README.md)\n${exampleLinks}`;
-  })
-  .join("\n");
+  for (const file of files) {
+    if (!file.isFile()) continue;
+    if (!file.name.endsWith(".md")) continue;
+    if (EXCLUDED_FILES.includes(file.name)) continue;
 
-const chapters = new Map<string, typeof registry.examples>();
-for (const example of registry.examples) {
-  for (const chapter of example.chapters ?? []) {
-    if (!chapters.has(chapter)) {
-      chapters.set(chapter, []);
-    }
-    chapters.get(chapter)?.push(example);
+    const filePath = path.join(docsDir, file.name);
+    const slug = file.name.replace(/\.md$/, "");
+    const title = getTitleFromFile(filePath, titleCase(slug));
+
+    entries.push(`* [${title}](${file.name})`);
   }
+
+  return entries.sort();
 }
 
-const chapterLinks =
-  chapters.size > 0
-    ? `* [Chapters](chapters/README.md)\n${Array.from(chapters.keys())
-        .sort((a, b) => a.localeCompare(b))
-        .map((chapter) => `  * [${titleCase(chapter)}](chapters/${chapter}.md)`)
-        .join("\n")}`
-    : "";
+/**
+ * Scan chapters folder and build navigation
+ */
+function scanChapters(): string {
+  const chaptersDir = path.join(docsDir, "chapters");
+  if (!fs.existsSync(chaptersDir)) return "";
 
-const staticLinks = [
-  "* [Introduction](README.md)",
-  "* [Start Here](start-here.md)",
-  "* [FHE 101](fhe-101.md)",
-  "* [Common Pitfalls](pitfalls.md)",
-  "* [Learning Paths](learning-paths.md)",
-].join("\n");
-
-const referencePath = path.join(referenceDir, "README.md");
-if (fs.existsSync(referenceDir)) {
-  const referenceSections = fs
-    .readdirSync(referenceDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .sort((a, b) => a.localeCompare(b))
-    .map((name) => `- [${titleCase(name)}](./${name}/README.md)`)
-    .join("\n");
-
-  const referenceReadme = `# API Reference
-
-This section provides **function-level API documentation** for all contracts, including:
-- Function signatures with parameter types
-- NatSpec documentation (@notice, @param, @return)
-- Events, errors, and state variables
-
-> 📖 For **tutorials and runnable examples**, see the [Example Pages](../README.md).
-
-## By Category
-
-${referenceSections || "No reference sections generated yet."}
-`;
-  fs.writeFileSync(referencePath, referenceReadme);
-
-  for (const section of fs.readdirSync(referenceDir, { withFileTypes: true })) {
-    if (!section.isDirectory()) continue;
-    const sectionDir = path.join(referenceDir, section.name);
-    const entries = fs.readdirSync(sectionDir, { withFileTypes: true });
-    const files = entries
-      .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
-      .map((entry) => entry.name)
-      .filter((name) => name.toLowerCase() !== "readme.md")
-      .sort((a, b) => a.localeCompare(b))
-      .map((name) => `- [${name.replace(/\.md$/i, "")}](./${name})`)
-      .join("\n");
-    const subdirs = entries
-      .filter((entry) => entry.isDirectory())
-      .map((entry) => entry.name)
-      .sort((a, b) => a.localeCompare(b))
-      .map((name) => `- [${titleCase(name)}](./${name}/README.md)`)
-      .join("\n");
-
-    const sectionReadme = `# ${titleCase(section.name)} Reference
-
-API documentation for ${titleCase(section.name)} contracts.
-
-> 📖 For tutorials, see [${titleCase(section.name)} Examples](../../${section.name}/README.md).
-
-## Contracts
-
-${files || "No reference files generated yet."}
-${subdirs ? `\n## Helpers & Mocks\n\n${subdirs}\n` : ""}`;
-    fs.writeFileSync(path.join(sectionDir, "README.md"), sectionReadme);
-  }
-}
-
-// Generate full reference navigation with all contracts listed
-function generateReferenceLinks(): string {
-  if (!fs.existsSync(referenceDir)) return "";
-
-  const sections = fs
-    .readdirSync(referenceDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .sort((a, b) => a.localeCompare(b));
-
-  if (sections.length === 0) return "";
-
-  const sectionLinks = sections
-    .map((section) => {
-      const sectionDir = path.join(referenceDir, section);
-      const entries = fs.readdirSync(sectionDir, { withFileTypes: true });
-
-      // Get top-level contract files
-      const contractFiles = entries
-        .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
-        .map((entry) => entry.name)
-        .filter((name) => name.toLowerCase() !== "readme.md")
-        .sort((a, b) => a.localeCompare(b))
-        .map((name) => {
-          const contractName = name.replace(/\.md$/i, "");
-          return `    * [${contractName}](reference/${section}/${name})`;
-        });
-
-      // Get subdirectory contracts (helpers, mocks)
-      const subdirFiles = entries
-        .filter((entry) => entry.isDirectory())
-        .flatMap((subdir) => {
-          const subdirPath = path.join(sectionDir, subdir.name);
-          return fs
-            .readdirSync(subdirPath)
-            .filter((file) => file.endsWith(".md") && file.toLowerCase() !== "readme.md")
-            .sort((a, b) => a.localeCompare(b))
-            .map((file) => {
-              const contractName = file.replace(/\.md$/i, "");
-              return `    * [${contractName}](reference/${section}/${subdir.name}/${file})`;
-            });
-        });
-
-      const allContracts = [...contractFiles, ...subdirFiles].join("\n");
-      return `  * [${titleCase(section)}](reference/${section}/README.md)\n${allContracts}`;
+  const entries = fs.readdirSync(chaptersDir, { withFileTypes: true });
+  const chapterLinks = entries
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
+    .filter((entry) => entry.name.toLowerCase() !== "readme.md")
+    .map((entry) => {
+      const filePath = path.join(chaptersDir, entry.name);
+      const slug = entry.name.replace(/\.md$/, "");
+      const title = getTitleFromFile(filePath, titleCase(slug));
+      return `  * [${title}](chapters/${entry.name})`;
     })
+    .sort()
     .join("\n");
 
-  return `* [API Reference](reference/README.md)\n${sectionLinks}`;
+  if (!chapterLinks) return "";
+
+  return `* [Chapters](chapters/README.md)\n${chapterLinks}`;
 }
 
-const referenceLinks = generateReferenceLinks();
+/**
+ * Scan category folders (identity, basic, etc.) and build navigation
+ */
+function scanCategories(): string[] {
+  const sections: string[] = [];
+  const categories = discoverCategories();
 
-const summary = `# Summary
+  for (const category of categories) {
+    const categoryDir = path.join(docsDir, category);
 
-${staticLinks}
-${chapterLinks ? `${chapterLinks}\n` : ""}${categoryLinks}
-${referenceLinks}
+    const entries = fs.readdirSync(categoryDir, { withFileTypes: true });
+    const exampleLinks = entries
+      .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
+      .filter((entry) => entry.name.toLowerCase() !== "readme.md")
+      .map((entry) => {
+        const filePath = path.join(categoryDir, entry.name);
+        const title = getTitleFromFile(filePath, entry.name.replace(/\.md$/, ""));
+        return `  * [${title}](${category}/${entry.name})`;
+      })
+      .sort()
+      .join("\n");
+
+    if (exampleLinks) {
+      sections.push(`* [${titleCase(category)} Examples](${category}/README.md)\n${exampleLinks}`);
+    }
+  }
+
+  return sections;
+}
+
+/**
+ * Main: Generate SUMMARY.md by scanning docs/
+ */
+function main(): void {
+  const introLink = "* [Introduction](README.md)";
+  const staticPages = scanStaticPages();
+  const chapters = scanChapters();
+  const categories = scanCategories();
+
+  const sections = [introLink, ...staticPages, chapters, ...categories].filter(Boolean);
+
+  const summary = `# Summary
+
+${sections.join("\n")}
 `;
 
-fs.writeFileSync(path.join(docsDir, "SUMMARY.md"), summary);
-console.log("Generated SUMMARY.md from contract registry");
+  fs.writeFileSync(path.join(docsDir, "SUMMARY.md"), summary);
+  console.log("Generated SUMMARY.md from docs/ file structure");
+}
+
+main();

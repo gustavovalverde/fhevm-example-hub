@@ -138,14 +138,17 @@ fhevm-example-hub/
 │   └── games/                        # Game examples (FHEWordle)
 ├── test/
 │   └── <category>/                   # Matching tests by category
-├── docs/
+├── docs-src/
+│   └── pages/                        # Source for static docs (start-here.md, fhe-101.md)
+├── docs/                             # Generated output (committed for GitBook)
 │   ├── README.md                     # Documentation index
-│   ├── SUMMARY.md                    # GitBook summary
+│   ├── SUMMARY.md                    # GitBook summary (file-driven)
 │   └── <category>/                   # Generated documentation by category
 ├── scripts/
 │   ├── create-fhevm-example.ts       # Standalone repo generator
 │   ├── create-fhevm-category.ts      # Category bundle generator
-│   └── generate-summary.ts           # GitBook summary generator
+│   ├── generate-gitbook.ts           # Tutorial page generator
+│   └── generate-summary.ts           # GitBook summary generator (scans docs/)
 └── output/                           # Generated standalone examples
 ```
 
@@ -202,13 +205,15 @@ contract EncryptedAgeVerification { ... }
 ```bash
 npm run docs          # Full pipeline: generates both views
 npm run docs:one      # Single example (tutorial page only)
-npm run docs:ref      # Reference docs only (solidity-docgen)
+npm run docgen        # Reference docs only (solidity-docgen)
 ```
 
 The pipeline generates:
-1. **Tutorial pages** via `scripts/generate-gitbook.ts` (TypeScript)
-2. **API reference** via [solidity-docgen](https://github.com/OpenZeppelin/solidity-docgen) with [Handlebars](https://handlebarsjs.com/) templates (`templates/contract.hbs`)
-3. **Navigation** via `scripts/generate-summary.ts` (GitBook SUMMARY.md)
+1. **Static pages** copied from `docs-src/pages/` (authored content)
+2. **Dynamic pages** (pitfalls, learning-paths) generated from contract metadata
+3. **Tutorial pages** via `scripts/generate-gitbook.ts` (TypeScript)
+4. **API reference** via [solidity-docgen](https://github.com/OpenZeppelin/solidity-docgen) with [Handlebars](https://handlebarsjs.com/) templates (`templates/contract.hbs`)
+5. **Navigation** via `scripts/generate-summary.ts` (file-driven, extracts titles from H1 headers)
 
 ### Documentation Workflow
 
@@ -226,9 +231,18 @@ This ensures documentation never drifts from code. The generated `docs/` directo
 
 ## Generated Outputs
 
-- `docs/reference/`, `docs/<category>/`, `docs/SUMMARY.md`, and `docs/catalog.json` are generated and committed for publishing.
-- `docs/start-here.md`, `docs/fhe-101.md`, and `docs/learning-paths.md` are curated source docs.
-- `output/` contains generated standalone repos and stays in `.gitignore`.
+**Source (authored):**
+- `docs-src/pages/*.md` - Static pages (start-here.md, fhe-101.md)
+
+**Generated (committed for GitBook):**
+- `docs/*.md` - All docs including copies of static pages and dynamic pages (pitfalls, learning-paths)
+- `docs/<category>/` - Tutorial pages per category
+- `docs/reference/` - API reference from solidity-docgen
+- `docs/SUMMARY.md` - Navigation (file-driven, titles from H1 headers)
+- `docs/catalog.json` - Machine-readable example index
+
+**Generated (gitignored):**
+- `output/` - Standalone repos created by `npm run create`
 
 ## Contributing
 

@@ -2,8 +2,6 @@
 
 > **Category**: Basic | **Difficulty**: Beginner | **Chapters**: Arithmetic | **Concept**: Subtract two encrypted values with FHE.sub
 
-> 📚 [View API Reference](../reference/basic/FHESub.md)
-
 Encrypted subtraction example for two values.
 
 ## Why this example
@@ -161,3 +159,43 @@ describe("FHESub", () => {
 ## Pitfalls to avoid
 
 No pitfalls are highlighted in the tests for this example.
+
+## API Reference
+
+## Overview
+
+Encrypted subtraction example for two values.
+
+### Developer Notes
+
+Example for fhEVM Examples - Basic Category
+
+### getLastResult
+
+```solidity
+function getLastResult() external view returns (euint64)
+```
+
+Returns the last encrypted difference.
+
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | euint64 | The last encrypted difference |
+
+### subValues
+
+```solidity
+function subValues(externalEuint64 encA, externalEuint64 encB, bytes inputProof) external
+```
+
+Subtract two encrypted inputs (a - b) and store the encrypted result.
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| encA | externalEuint64 | First encrypted value handle (minuend) |
+| encB | externalEuint64 | Second encrypted value handle (subtrahend) |
+| inputProof | bytes | Proof for the encrypted inputs |

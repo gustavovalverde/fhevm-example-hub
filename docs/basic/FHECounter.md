@@ -2,8 +2,6 @@
 
 > **Category**: Basic | **Difficulty**: Beginner | **Chapters**: Basics | **Concept**: Encrypted counter using FHE.add and FHE.sub
 
-> 📚 [View API Reference](../reference/basic/FHECounter.md)
-
 Encrypted counter with increment and decrement operations.
 
 ## Why this example
@@ -164,3 +162,57 @@ describe("FHECounter", () => {
 ## Pitfalls to avoid
 
 No pitfalls are highlighted in the tests for this example.
+
+## API Reference
+
+## Overview
+
+Encrypted counter with increment and decrement operations.
+
+### Developer Notes
+
+Example for fhEVM Examples - Basic Category
+
+### getCount
+
+```solidity
+function getCount() external view returns (euint64)
+```
+
+Returns the encrypted counter value.
+
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | euint64 | The encrypted counter value |
+
+### increment
+
+```solidity
+function increment(externalEuint64 encAmount, bytes inputProof) external
+```
+
+Increment the counter by an encrypted amount.
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| encAmount | externalEuint64 | Encrypted amount handle |
+| inputProof | bytes | Proof for the encrypted input |
+
+### decrement
+
+```solidity
+function decrement(externalEuint64 encAmount, bytes inputProof) external
+```
+
+Decrement the counter by an encrypted amount.
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| encAmount | externalEuint64 | Encrypted amount handle |
+| inputProof | bytes | Proof for the encrypted input |

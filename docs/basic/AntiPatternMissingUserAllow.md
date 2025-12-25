@@ -2,8 +2,6 @@
 
 > **Category**: Basic | **Difficulty**: Intermediate | **Chapters**: Anti Patterns | **Concept**: Missing FHE.allow(user) blocks user decryption
 
-> 📚 [View API Reference](../reference/basic/AntiPatternMissingUserAllow.md)
-
 Forgetting to grant user access prevents decryption.
 
 ## Why this example
@@ -136,3 +134,48 @@ describe("AntiPatternMissingUserAllow", () => {
 ## Pitfalls to avoid
 
 - fails to decrypt when FHE.allow(user) is missing
+
+## API Reference
+
+## Overview
+
+Forgetting to grant user access prevents decryption.
+
+### Developer Notes
+
+Example for fhEVM Examples - Basic Category
+
+### storeValue
+
+```solidity
+function storeValue(externalEuint64 encValue, bytes inputProof) external
+```
+
+Store an encrypted value but forget to grant user access (pitfall).
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| encValue | externalEuint64 | Encrypted value handle |
+| inputProof | bytes | Proof for the encrypted input |
+
+### getStoredValue
+
+```solidity
+function getStoredValue(address user) external view returns (euint64)
+```
+
+Return the stored encrypted value.
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| user | address | Account holding the encrypted value |
+
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | euint64 | The encrypted stored value |

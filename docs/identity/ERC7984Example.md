@@ -2,8 +2,6 @@
 
 > **Category**: Identity | **Difficulty**: Beginner | **Chapters**: Erc7984 | **Concept**: Minimal ERC7984 token with confidential mint + transfer
 
-> 📚 [View API Reference](../reference/identity/ERC7984Example.md)
-
 Minimal ERC7984 confidential token example.
 
 ## Why this example
@@ -177,3 +175,43 @@ describe("ERC7984Example", () => {
 ## Pitfalls to avoid
 
 No pitfalls are highlighted in the tests for this example.
+
+## API Reference
+
+## Overview
+
+Minimal ERC7984 confidential token example.
+
+### Developer Notes
+
+Example for fhEVM Examples - OpenZeppelin Confidential Contracts
+
+### constructor
+
+```solidity
+constructor(address initialOwner) public
+```
+
+Initialize the minimal ERC7984 token
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| initialOwner | address | The address that will own the contract |
+
+### mint
+
+```solidity
+function mint(address to, externalEuint64 amount, bytes inputProof) external
+```
+
+Mint confidential tokens (owner-only)
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| to | address | Recipient |
+| amount | externalEuint64 | Encrypted amount |
+| inputProof | bytes | Proof for the encrypted input |

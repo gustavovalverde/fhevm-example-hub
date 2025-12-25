@@ -4,8 +4,10 @@ Welcome to the fhEVM Examples library. These examples span multiple categories a
 
 ## Start here
 
-- New to fhEVM? Start with **[Start Here](start-here.md)** and **[FHE 101](fhe-101.md)**.
-- Unsure what to pick? See **[Learning Paths](learning-paths.md)**.
+- **[FHE 101 (Plain Language)](fhe-101.md)**
+- **[Start Here](start-here.md)**
+- **[Common Pitfalls](pitfalls.md)**
+- **[Learning Paths](learning-paths.md)**
 - Want to browse by topic? See **[Chapters](chapters/README.md)**.
 
 ## Example map

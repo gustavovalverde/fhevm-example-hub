@@ -2,8 +2,6 @@
 
 > **Category**: Basic | **Difficulty**: Beginner | **Chapters**: Decryption User | **Concept**: User decryption flow for a single encrypted result
 
-> 📚 [View API Reference](../reference/basic/UserDecryptSingleValue.md)
-
 Compute on encrypted input and allow the user to decrypt the result.
 
 ## Why this example
@@ -135,3 +133,42 @@ describe("UserDecryptSingleValue", () => {
 ## Pitfalls to avoid
 
 No pitfalls are highlighted in the tests for this example.
+
+## API Reference
+
+## Overview
+
+Compute on encrypted input and allow the user to decrypt the result.
+
+### Developer Notes
+
+Example for fhEVM Examples - Basic Category
+
+### getLastResult
+
+```solidity
+function getLastResult() external view returns (euint64)
+```
+
+Get the encrypted result.
+
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | euint64 | The encrypted result |
+
+### computePlusOne
+
+```solidity
+function computePlusOne(externalEuint64 encValue, bytes inputProof) external
+```
+
+Add 1 to the encrypted input and store the encrypted result.
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| encValue | externalEuint64 | Encrypted value handle |
+| inputProof | bytes | Proof for the encrypted input |

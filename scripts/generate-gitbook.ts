@@ -6,6 +6,7 @@ import { type ExampleMeta, loadExampleRegistry } from "./example-registry";
 
 const rootDir = path.resolve(__dirname, "..");
 const docsDir = path.join(rootDir, "docs");
+const staticDocsDir = path.join(rootDir, "static-docs");
 const registry = loadExampleRegistry(rootDir);
 
 type CliOptions = {
@@ -64,6 +65,29 @@ function readFile(filePath: string): string {
 
 function codeBlock(language: string, content: string): string {
   return `\n\n\`\`\`${language}\n${content.trimEnd()}\n\`\`\`\n`;
+}
+
+/**
+ * Extract API reference content from a reference markdown file.
+ * Skips the H1 header and metadata block, keeps everything from "## Overview" onwards.
+ */
+function extractApiContent(refContent: string): string {
+  // Find the first H2 or H3 heading (start of actual content)
+  const match = refContent.match(/^(#{2,3}\s+.+)$/m);
+  if (!match || match.index === undefined) return "";
+  return refContent.slice(match.index).trim();
+}
+
+/**
+ * Read and extract API reference for an example.
+ * Returns the API content or empty string if reference file doesn't exist.
+ */
+function getApiReference(category: string, docName: string): string {
+  const refPath = path.join(docsDir, "reference", category, `${docName}.md`);
+  if (!fs.existsSync(refPath)) return "";
+
+  const refContent = fs.readFileSync(refPath, "utf8");
+  return extractApiContent(refContent);
 }
 
 function extractPitfalls(testContent?: string): string[] {
@@ -139,11 +163,13 @@ function generateExampleDoc(example: ExampleMeta, byContract: Map<string, Exampl
 
   const quickStart = testPath ? `npm run test:mocked -- ${testPath}` : "npm run test:mocked";
 
+  // Get inlined API reference content
+  const apiContent = getApiReference(example.category, example.docName);
+  const apiSection = apiContent ? `\n## API Reference\n\n${apiContent}\n` : "";
+
   return `# ${example.title}
 
 > **Category**: ${titleCase(example.category)} | **Difficulty**: ${example.difficulty} | **Chapters**: ${formatChapters(example.chapters)} | **Concept**: ${example.concept}
-
-> 📚 [View API Reference](../reference/${example.category}/${example.docName}.md)
 
 ${example.notice ?? ""}
 
@@ -181,7 +207,7 @@ ${testContent ? codeBlock("typescript", testContent) : "No test file available f
 ## Pitfalls to avoid
 
 ${pitfalls.length === 0 ? "No pitfalls are highlighted in the tests for this example." : pitfalls.map((item) => `- ${item}`).join("\n")}
-`;
+${apiSection}`;
 }
 
 function generateCategoryReadme(category: string, examples: ExampleMeta[]): string {
@@ -214,6 +240,27 @@ ${sections}
 `;
 }
 
+function extractH1(content: string): string | null {
+  const match = content.match(/^#\s+(.+)$/m);
+  return match?.[1]?.trim() ?? null;
+}
+
+function scanStaticPages(): Array<{ slug: string; title: string }> {
+  if (!fs.existsSync(staticDocsDir)) return [];
+
+  return fs
+    .readdirSync(staticDocsDir, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
+    .map((entry) => {
+      const slug = entry.name.replace(/\.md$/, "");
+      const filePath = path.join(staticDocsDir, entry.name);
+      const content = fs.readFileSync(filePath, "utf8");
+      const title = extractH1(content) ?? titleCase(slug);
+      return { slug, title };
+    })
+    .sort((a, b) => a.title.localeCompare(b.title));
+}
+
 function generateIntroPage(categories: Map<string, ExampleMeta[]>): string {
   const categorySections = Array.from(categories.entries())
     .sort(([a], [b]) => a.localeCompare(b))
@@ -230,85 +277,29 @@ function generateIntroPage(categories: Map<string, ExampleMeta[]>): string {
     })
     .join("\n\n");
 
+  // Build intro links by scanning docs-src/pages/ (file-driven)
+  const staticPages = scanStaticPages();
+  const introLinks = staticPages.map((page) => `- **[${page.title}](${page.slug}.md)**`).join("\n");
+
+  // Add dynamic pages to intro
+  const dynamicLinks = [
+    "- **[Common Pitfalls](pitfalls.md)**",
+    "- **[Learning Paths](learning-paths.md)**",
+  ].join("\n");
+
   return `# fhEVM Examples
 
 Welcome to the fhEVM Examples library. These examples span multiple categories and are designed to help you learn privacy-preserving smart contract patterns step by step.
 
 ## Start here
 
-- New to fhEVM? Start with **[Start Here](start-here.md)** and **[FHE 101](fhe-101.md)**.
-- Unsure what to pick? See **[Learning Paths](learning-paths.md)**.
+${introLinks}
+${dynamicLinks}
 - Want to browse by topic? See **[Chapters](chapters/README.md)**.
 
 ## Example map
 
 ${categorySections}
-`;
-}
-
-function generateStartHere(): string {
-  return `# Start Here
-
-If this is your first time with fhEVM, this page is the fastest way to get a working example and understand what is happening.
-
-## 1) Install and run an example
-
-\`\`\`bash
-npm install
-npm run test:mocked
-\`\`\`
-
-## 2) Pick a beginner example
-
-- **FHE Counter** (encrypted counter operations)
-- **Encrypt Single Value** (store one encrypted value)
-
-## 3) Read the example page
-
-Each example page includes:
-- A short explanation of the concept
-- The full contract and test (tabs)
-- Pitfalls to avoid
-
-## 4) Generate your own example
-
-Once you are comfortable, use the generator:
-
-\`\`\`bash
-npm run create fhe-counter ./output/fhe-counter
-\`\`\`
-
-That creates a standalone repo you can customize.
-`;
-}
-
-function generateFhe101(): string {
-  return `# FHE 101 (Plain Language)
-
-Fully Homomorphic Encryption lets a smart contract operate on encrypted values without revealing them on-chain.
-
-## Key ideas
-
-- **Encrypted values are bound** to a contract and a user.
-- **Input proofs** show the encrypted input matches the expected contract + signer.
-- **Permissions** are required to decrypt results.
-
-## The 3 permissions you will see
-
-- \`FHE.allowThis(value)\` lets the contract operate on the ciphertext later.
-- \`FHE.allow(value, user)\` lets a user decrypt.
-- \`FHE.allowTransient(value, contract)\` grants one-transaction permission (useful for multi-contract flows).
-
-## Public decryption
-
-Some examples opt in to public decryption using \`FHE.makePubliclyDecryptable\`. This is only safe if the value is meant to be public after an on-chain proof step.
-
-## Typical flow
-
-1) User encrypts input off-chain (bound to contract + user)
-2) Contract verifies the input proof and stores the ciphertext
-3) Contract grants permissions (allowThis / allow)
-4) Later, user or authorized party decrypts
 `;
 }
 
@@ -413,11 +404,25 @@ function main(): void {
 
   ensureDir(docsDir);
 
+  // Generate intro page
   writeDoc("README.md", generateIntroPage(registry.categories));
-  writeDoc("start-here.md", generateStartHere());
-  writeDoc("fhe-101.md", generateFhe101());
+
+  // Copy static pages from docs-src/pages/ (file-driven)
+  if (fs.existsSync(staticDocsDir)) {
+    for (const entry of fs.readdirSync(staticDocsDir, { withFileTypes: true })) {
+      if (entry.isFile() && entry.name.endsWith(".md")) {
+        const content = fs.readFileSync(path.join(staticDocsDir, entry.name), "utf8");
+        const slug = entry.name.replace(/\.md$/, "");
+        writeDoc(`${slug}.md`, content);
+      }
+    }
+  }
+
+  // Generate dynamic pages
   writeDoc("pitfalls.md", generatePitfallsPage(registry.examples));
   writeDoc("learning-paths.md", generateLearningPaths(registry.examples));
+
+  // Generate chapters
   writeDoc("chapters/README.md", generateChaptersIndex(chapters));
 
   for (const [chapter, examples] of chapters.entries()) {
