@@ -237,7 +237,6 @@ Welcome to the fhEVM Examples library. These examples span multiple categories a
 ## Start here
 
 - New to fhEVM? Start with **[Start Here](start-here.md)** and **[FHE 101](fhe-101.md)**.
-- Want to build quickly? Jump to **[Create Your Own Example](create-your-example.md)**.
 - Unsure what to pick? See **[Learning Paths](learning-paths.md)**.
 - Want to browse by topic? See **[Chapters](chapters/README.md)**.
 
@@ -310,36 +309,6 @@ Some examples opt in to public decryption using \`FHE.makePubliclyDecryptable\`.
 2) Contract verifies the input proof and stores the ciphertext
 3) Contract grants permissions (allowThis / allow)
 4) Later, user or authorized party decrypts
-`;
-}
-
-function generateCreateYourExample(): string {
-  return `# Create Your Own Example
-
-This repository auto-discovers examples directly from the \`contracts/\` folder. You do not need to update hardcoded lists.
-
-## Required tags (in NatSpec)
-
-Every example contract must include:
-
-- \`@title\`
-- \`@custom:category\`
-- \`@custom:chapter\`
-- \`@custom:concept\`
-- \`@custom:difficulty\`
-
-## Optional tags
-
-- \`@custom:depends-on\` (comma-separated contract names)
-- \`@custom:deploy-plan\` (single-line JSON array)
-
-## Create a standalone example repo
-
-\`\`\`bash
-npm run create <example-slug> <output-dir>
-\`\`\`
-
-The generator copies your contract + test and creates a ready-to-run Hardhat project.
 `;
 }
 
@@ -448,7 +417,6 @@ function main(): void {
   writeDoc("start-here.md", generateStartHere());
   writeDoc("fhe-101.md", generateFhe101());
   writeDoc("pitfalls.md", generatePitfallsPage(registry.examples));
-  writeDoc("create-your-example.md", generateCreateYourExample());
   writeDoc("learning-paths.md", generateLearningPaths(registry.examples));
   writeDoc("chapters/README.md", generateChaptersIndex(chapters));
 

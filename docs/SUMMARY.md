@@ -4,7 +4,6 @@
 * [Start Here](start-here.md)
 * [FHE 101](fhe-101.md)
 * [Common Pitfalls](pitfalls.md)
-* [Create Your Own Example](create-your-example.md)
 * [Learning Paths](learning-paths.md)
 * [Chapters](chapters/README.md)
   * [Access Control](chapters/access-control.md)

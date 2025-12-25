@@ -5,7 +5,6 @@ Welcome to the fhEVM Examples library. These examples span multiple categories a
 ## Start here
 
 - New to fhEVM? Start with **[Start Here](start-here.md)** and **[FHE 101](fhe-101.md)**.
-- Want to build quickly? Jump to **[Create Your Own Example](create-your-example.md)**.
 - Unsure what to pick? See **[Learning Paths](learning-paths.md)**.
 - Want to browse by topic? See **[Chapters](chapters/README.md)**.
 
