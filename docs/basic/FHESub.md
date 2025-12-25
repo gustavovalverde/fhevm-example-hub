@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Beginner | **Chapters**: Arithmetic | **Concept**: Subtract two encrypted values with FHE.sub
 
+> 📚 [View API Reference](../reference/basic/FHESub.md)
+
 Encrypted subtraction example for two values.
 
 ## Why this example

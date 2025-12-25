@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Intermediate | **Chapters**: Anti Patterns | **Concept**: View functions return encrypted handles, not plaintext
 
+> 📚 [View API Reference](../reference/basic/AntiPatternViewOnEncrypted.md)
+
 Demonstrates why a view call still returns encrypted handles.
 
 ## Why this example

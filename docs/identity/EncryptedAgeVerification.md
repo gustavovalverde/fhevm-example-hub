@@ -2,6 +2,8 @@
 
 > **Category**: Identity | **Difficulty**: Beginner | **Chapters**: Comparisons | **Concept**: FHE comparison (le, ge) for threshold checks without revealing values
 
+> 📚 [View API Reference](../reference/identity/EncryptedAgeVerification.md)
+
 Demonstrates FHE age threshold verification without revealing actual age
 
 ## Why this example

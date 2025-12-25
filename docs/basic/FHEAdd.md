@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Beginner | **Chapters**: Arithmetic | **Concept**: Add two encrypted values with FHE.add
 
+> 📚 [View API Reference](../reference/basic/FHEAdd.md)
+
 Encrypted addition example for two values.
 
 ## Why this example

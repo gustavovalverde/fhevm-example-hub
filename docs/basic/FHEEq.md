@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Beginner | **Chapters**: Comparisons | **Concept**: Compare two encrypted values using FHE.eq
 
+> 📚 [View API Reference](../reference/basic/FHEEq.md)
+
 Encrypted equality comparison with FHE.eq.
 
 ## Why this example

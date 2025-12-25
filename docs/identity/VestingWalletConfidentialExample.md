@@ -2,6 +2,8 @@
 
 > **Category**: Identity | **Difficulty**: Advanced | **Chapters**: Erc7984, Vesting | **Concept**: Confidential vesting (ERC7984) + public KYC gating + factory/clones
 
+> 📚 [View API Reference](../reference/identity/VestingWalletConfidentialExample.md)
+
 Confidential vesting wallet with public KYC gating on releases
 
 ## Why this example

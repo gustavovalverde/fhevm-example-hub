@@ -69,7 +69,19 @@ if (fs.existsSync(referenceDir)) {
     .map((name) => `- [${titleCase(name)}](./${name}/README.md)`)
     .join("\n");
 
-  const referenceReadme = `# Reference\n\nAuto-generated contract reference pages from Solidity docgen.\n\n${referenceSections || "No reference sections generated yet."}\n`;
+  const referenceReadme = `# API Reference
+
+This section provides **function-level API documentation** for all contracts, including:
+- Function signatures with parameter types
+- NatSpec documentation (@notice, @param, @return)
+- Events, errors, and state variables
+
+> 📖 For **tutorials and runnable examples**, see the [Example Pages](../README.md).
+
+## By Category
+
+${referenceSections || "No reference sections generated yet."}
+`;
   fs.writeFileSync(referencePath, referenceReadme);
 
   for (const section of fs.readdirSync(referenceDir, { withFileTypes: true })) {
@@ -90,17 +102,78 @@ if (fs.existsSync(referenceDir)) {
       .map((name) => `- [${titleCase(name)}](./${name}/README.md)`)
       .join("\n");
 
-    const sectionReadme = `# ${titleCase(section.name)} Reference\n\n${files || "No reference files generated yet."}\n\n${subdirs ? `## Subsections\n\n${subdirs}\n` : ""}`;
+    const sectionReadme = `# ${titleCase(section.name)} Reference
+
+API documentation for ${titleCase(section.name)} contracts.
+
+> 📖 For tutorials, see [${titleCase(section.name)} Examples](../../${section.name}/README.md).
+
+## Contracts
+
+${files || "No reference files generated yet."}
+${subdirs ? `\n## Helpers & Mocks\n\n${subdirs}\n` : ""}`;
     fs.writeFileSync(path.join(sectionDir, "README.md"), sectionReadme);
   }
 }
 
-const referenceLink = fs.existsSync(referencePath) ? "\n* [Reference](reference/README.md)" : "";
+// Generate full reference navigation with all contracts listed
+function generateReferenceLinks(): string {
+  if (!fs.existsSync(referenceDir)) return "";
+
+  const sections = fs
+    .readdirSync(referenceDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort((a, b) => a.localeCompare(b));
+
+  if (sections.length === 0) return "";
+
+  const sectionLinks = sections
+    .map((section) => {
+      const sectionDir = path.join(referenceDir, section);
+      const entries = fs.readdirSync(sectionDir, { withFileTypes: true });
+
+      // Get top-level contract files
+      const contractFiles = entries
+        .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
+        .map((entry) => entry.name)
+        .filter((name) => name.toLowerCase() !== "readme.md")
+        .sort((a, b) => a.localeCompare(b))
+        .map((name) => {
+          const contractName = name.replace(/\.md$/i, "");
+          return `    * [${contractName}](reference/${section}/${name})`;
+        });
+
+      // Get subdirectory contracts (helpers, mocks)
+      const subdirFiles = entries
+        .filter((entry) => entry.isDirectory())
+        .flatMap((subdir) => {
+          const subdirPath = path.join(sectionDir, subdir.name);
+          return fs
+            .readdirSync(subdirPath)
+            .filter((file) => file.endsWith(".md") && file.toLowerCase() !== "readme.md")
+            .sort((a, b) => a.localeCompare(b))
+            .map((file) => {
+              const contractName = file.replace(/\.md$/i, "");
+              return `    * [${contractName}](reference/${section}/${subdir.name}/${file})`;
+            });
+        });
+
+      const allContracts = [...contractFiles, ...subdirFiles].join("\n");
+      return `  * [${titleCase(section)}](reference/${section}/README.md)\n${allContracts}`;
+    })
+    .join("\n");
+
+  return `* [API Reference](reference/README.md)\n${sectionLinks}`;
+}
+
+const referenceLinks = generateReferenceLinks();
 
 const summary = `# Summary
 
 ${staticLinks}
-${chapterLinks ? `${chapterLinks}\n` : ""}${categoryLinks}${referenceLink}
+${chapterLinks ? `${chapterLinks}\n` : ""}${categoryLinks}
+${referenceLinks}
 `;
 
 fs.writeFileSync(path.join(docsDir, "SUMMARY.md"), summary);

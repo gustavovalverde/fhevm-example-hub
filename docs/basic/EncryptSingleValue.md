@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Beginner | **Chapters**: Encryption | **Concept**: Store one encrypted value and grant permissions
 
+> 📚 [View API Reference](../reference/basic/EncryptSingleValue.md)
+
 Store a single encrypted value for each user.
 
 ## Why this example

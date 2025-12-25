@@ -2,6 +2,8 @@
 
 > **Category**: Identity | **Difficulty**: Intermediate | **Chapters**: Erc7984 | **Concept**: OpenZeppelin ERC7984Restricted + public KYC allowlist (revert-based compliance)
 
+> 📚 [View API Reference](../reference/identity/ERC7984KycRestricted.md)
+
 ERC7984 token with public KYC allowlist enforcement (reverts on non-KYC users)
 
 ## Why this example

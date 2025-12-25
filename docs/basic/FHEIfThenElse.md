@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Beginner | **Chapters**: Arithmetic | **Concept**: Conditional selection on encrypted values using FHE.select
 
+> 📚 [View API Reference](../reference/basic/FHEIfThenElse.md)
+
 Use FHE.select to implement an encrypted if/else branch.
 
 ## Why this example

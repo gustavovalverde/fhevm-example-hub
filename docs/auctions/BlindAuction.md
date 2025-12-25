@@ -2,6 +2,8 @@
 
 > **Category**: Auctions | **Difficulty**: Advanced | **Chapters**: Auctions | **Concept**: Sealed-bid auction with encrypted bids and public reveal
 
+> 📚 [View API Reference](../reference/auctions/BlindAuction.md)
+
 Sealed-bid auction using encrypted bids and confidential payments.
 
 ## Why this example

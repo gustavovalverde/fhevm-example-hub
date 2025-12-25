@@ -143,6 +143,8 @@ function generateExampleDoc(example: ExampleMeta, byContract: Map<string, Exampl
 
 > **Category**: ${titleCase(example.category)} | **Difficulty**: ${example.difficulty} | **Chapters**: ${formatChapters(example.chapters)} | **Concept**: ${example.concept}
 
+> 📚 [View API Reference](../reference/${example.category}/${example.docName}.md)
+
 ${example.notice ?? ""}
 
 ## Why this example

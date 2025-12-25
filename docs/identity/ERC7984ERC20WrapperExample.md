@@ -2,6 +2,8 @@
 
 > **Category**: Identity | **Difficulty**: Advanced | **Chapters**: Erc7984 | **Concept**: ERC7984ERC20Wrapper (ERC20 ↔ ERC7984) + KYC-gated wrap/unwrap
 
+> 📚 [View API Reference](../reference/identity/ERC7984ERC20WrapperExample.md)
+
 Wrap a public ERC20 into a confidential ERC7984 token, and unwrap back via public decryption
 
 ## Why this example

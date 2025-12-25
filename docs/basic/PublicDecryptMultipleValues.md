@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Intermediate | **Chapters**: Decryption Public, Relayer | **Concept**: Public decryption flow for multiple encrypted values
 
+> 📚 [View API Reference](../reference/basic/PublicDecryptMultipleValues.md)
+
 Publish multiple encrypted results for public decryption.
 
 ## Why this example

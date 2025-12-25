@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Beginner | **Chapters**: Decryption User | **Concept**: User decryption flow for multiple encrypted results
 
+> 📚 [View API Reference](../reference/basic/UserDecryptMultipleValues.md)
+
 Produce multiple encrypted outputs and allow the user to decrypt both.
 
 ## Why this example

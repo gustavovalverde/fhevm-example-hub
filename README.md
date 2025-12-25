@@ -151,24 +151,39 @@ fhevm-example-hub/
 
 ## Documentation Architecture
 
-This project uses a **NatSpec-driven documentation system** that auto-generates docs from contract comments. This ensures documentation never drifts from code.
+This project generates **two complementary documentation views** from the same source contracts:
 
-### NatSpec Custom Tags
+### Tutorial Pages (`docs/<category>/`)
 
-Each contract uses [Solidity NatSpec](https://docs.soliditylang.org/en/latest/natspec-format.html) annotations with custom tags that our tooling parses:
+Interactive learning content with full code examples:
+- Full contract + test code in GitBook tabs
+- Quick start commands for each example
+- Pitfall extraction from test names
+- Cross-linked dependencies
+
+**Best for:** Learning fhEVM patterns, copy-paste examples, understanding test approaches.
+
+### API Reference (`docs/reference/`)
+
+Function-level API documentation:
+- Function signatures with parameter tables
+- NatSpec extraction (@notice, @param, @return)
+- Events, errors, and state variables
+
+**Best for:** Quick lookups, integration reference, understanding function parameters.
+
+### How It Works
+
+Both systems are driven by **NatSpec custom tags** in each contract:
 
 ```solidity
 /**
  * @title EncryptedAgeVerification
- * @notice Demonstrates FHE age threshold verification without revealing actual age
- * @dev Example for fhEVM Examples - Identity Category
- *
+ * @notice Demonstrates FHE age threshold verification
  * @custom:category identity
  * @custom:chapter comparisons
  * @custom:concept FHE comparison (le, ge) for threshold checks
  * @custom:difficulty beginner
- * @custom:depends-on IdentityRegistry,ComplianceRules
- * @custom:deploy-plan [{"contract":"Helper"},{"contract":"Main","args":["@Helper"]}]
  */
 contract EncryptedAgeVerification { ... }
 ```
@@ -176,49 +191,38 @@ contract EncryptedAgeVerification { ... }
 | Tag | Purpose |
 |-----|---------|
 | `@custom:category` | Groups examples (basic, identity, auctions, games) |
-| `@custom:chapter` | Topic for GitBook navigation (comparisons, decryption, etc.) |
-| `@custom:concept` | One-line description for tables and listings |
+| `@custom:chapter` | Topic for GitBook navigation |
+| `@custom:concept` | One-line description for tables |
 | `@custom:difficulty` | Skill level (beginner, intermediate, advanced) |
 | `@custom:depends-on` | Other contracts this example requires |
 | `@custom:deploy-plan` | JSON deployment sequence for standalone generation |
 
-### solidity-docgen + Handlebars
-
-We use [solidity-docgen](https://github.com/OpenZeppelin/solidity-docgen) with custom [Handlebars](https://handlebarsjs.com/) templates to generate reference docs:
-
-```
-templates/
-├── contract.hbs   # Per-contract markdown with NatSpec fields
-└── page.hbs       # Page wrapper template
-```
-
-The `contract.hbs` template extracts NatSpec custom tags and renders them as metadata:
-
-```handlebars
-# {{name}}
-
-{{#if natspec.custom}}
-> **Category**: {{natspec.custom.category}} | **Difficulty**: {{natspec.custom.difficulty}}
-{{/if}}
-
-## Overview
-{{{natspec.notice}}}
-```
-
-This produces consistent documentation that automatically includes category, difficulty, and concept metadata from the contract itself.
-
 ### Documentation Pipeline
 
 ```bash
-npm run docs          # Full pipeline: solidity-docgen + GitBook generation
-npm run docs:one      # Single example docs
+npm run docs          # Full pipeline: generates both views
+npm run docs:one      # Single example (tutorial page only)
 npm run docs:ref      # Reference docs only (solidity-docgen)
 ```
 
-The pipeline:
-1. **solidity-docgen** parses contracts and generates `docs/reference/` using Handlebars templates
-2. **generate-gitbook.ts** reads contracts, extracts NatSpec, and creates GitBook pages with code tabs
-3. **generate-summary.ts** builds `docs/SUMMARY.md` for GitBook navigation
+The pipeline generates:
+1. **Tutorial pages** via `scripts/generate-gitbook.ts` (TypeScript)
+2. **API reference** via [solidity-docgen](https://github.com/OpenZeppelin/solidity-docgen) with [Handlebars](https://handlebarsjs.com/) templates (`templates/contract.hbs`)
+3. **Navigation** via `scripts/generate-summary.ts` (GitBook SUMMARY.md)
+
+### Documentation Workflow
+
+The pre-commit hook automatically keeps docs in sync with code:
+
+1. **Edit** a contract, test, or script
+2. **Commit** your changes (`git commit`)
+3. **Pre-commit hook** runs `npm run docs` automatically
+4. **If docs changed**, the hook warns you to stage them
+5. **Stage docs** with `git add docs/`
+6. **Commit succeeds** with updated docs included
+7. **Push** to GitHub → GitBook rebuilds from committed docs
+
+This ensures documentation never drifts from code. The generated `docs/` directory is committed to the repository, not generated on-the-fly.
 
 ## Generated Outputs
 

@@ -2,6 +2,8 @@
 
 > **Category**: Identity | **Difficulty**: Advanced | **Chapters**: Compliance | **Concept**: FHE.select() for branch-free compliant transfers
 
+> 📚 [View API Reference](../reference/identity/CompliantERC20.md)
+
 ERC20-like token with encrypted balances and compliance checks
 
 ## Why this example

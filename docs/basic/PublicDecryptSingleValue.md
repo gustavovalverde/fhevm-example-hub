@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Intermediate | **Chapters**: Decryption Public, Relayer | **Concept**: Public decryption flow for a single encrypted value
 
+> 📚 [View API Reference](../reference/basic/PublicDecryptSingleValue.md)
+
 Publish a single encrypted result for public decryption.
 
 ## Why this example

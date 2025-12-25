@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Intermediate | **Chapters**: Handles | **Concept**: Handles are opaque references; FHE ops create derived handles (symbolic execution)
 
+> 📚 [View API Reference](../reference/basic/HandleGeneration.md)
+
 Show how encrypted handles are created and derived without plaintext.
 
 ## Why this example

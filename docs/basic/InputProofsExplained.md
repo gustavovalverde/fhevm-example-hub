@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Intermediate | **Chapters**: Input Proofs | **Concept**: Input proofs bind encrypted inputs to a contract and sender
 
+> 📚 [View API Reference](../reference/basic/InputProofsExplained.md)
+
 Demonstrate input proof binding to contract and signer.
 
 ## Why this example

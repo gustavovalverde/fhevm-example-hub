@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Intermediate | **Chapters**: Anti Patterns | **Concept**: Missing FHE.allow(user) blocks user decryption
 
+> 📚 [View API Reference](../reference/basic/AntiPatternMissingUserAllow.md)
+
 Forgetting to grant user access prevents decryption.
 
 ## Why this example

@@ -2,6 +2,8 @@
 
 > **Category**: Identity | **Difficulty**: Advanced | **Chapters**: Erc7984, Swaps | **Concept**: ERC7984 → ERC20 swap using public decryption + FHE.checkSignatures (KYC is public)
 
+> 📚 [View API Reference](../reference/identity/SwapERC7984ToERC20.md)
+
 Swap a confidential ERC7984 token amount to a public ERC20 via public decryption finalization
 
 ## Why this example

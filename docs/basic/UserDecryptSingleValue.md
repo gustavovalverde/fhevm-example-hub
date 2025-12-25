@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Beginner | **Chapters**: Decryption User | **Concept**: User decryption flow for a single encrypted result
 
+> 📚 [View API Reference](../reference/basic/UserDecryptSingleValue.md)
+
 Compute on encrypted input and allow the user to decrypt the result.
 
 ## Why this example

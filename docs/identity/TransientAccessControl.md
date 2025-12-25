@@ -2,6 +2,8 @@
 
 > **Category**: Identity | **Difficulty**: Intermediate | **Chapters**: Access Control | **Concept**: FHE.allowTransient() for one-transaction permissions between contracts
 
+> 📚 [View API Reference](../reference/identity/TransientAccessControl.md)
+
 Demonstrates `FHE.allowTransient()` for cross-contract encrypted workflows
 
 ## Why this example

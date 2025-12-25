@@ -2,6 +2,8 @@
 
 > **Category**: Identity | **Difficulty**: Beginner | **Chapters**: Erc7984 | **Concept**: Minimal ERC7984 token with confidential mint + transfer
 
+> 📚 [View API Reference](../reference/identity/ERC7984Example.md)
+
 Minimal ERC7984 confidential token example.
 
 ## Why this example

@@ -2,6 +2,8 @@
 
 > **Category**: Games | **Difficulty**: Intermediate | **Chapters**: Games | **Concept**: Encrypted letter comparison with branch-free feedback
 
+> 📚 [View API Reference](../reference/games/FHEWordle.md)
+
 Simplified Wordle game with encrypted word and feedback.
 
 ## Why this example

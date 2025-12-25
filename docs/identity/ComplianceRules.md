@@ -2,6 +2,8 @@
 
 > **Category**: Identity | **Difficulty**: Intermediate | **Chapters**: Compliance | **Concept**: Combining encrypted compliance checks with FHE.and()
 
+> 📚 [View API Reference](../reference/identity/ComplianceRules.md)
+
 Combines multiple compliance checks using FHE operations
 
 ## Why this example

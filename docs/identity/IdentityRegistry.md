@@ -2,6 +2,8 @@
 
 > **Category**: Identity | **Difficulty**: Intermediate | **Chapters**: Identity, Access Control | **Concept**: Storing encrypted identity attributes (euint8, euint16, ebool)
 
+> 📚 [View API Reference](../reference/identity/IdentityRegistry.md)
+
 On-chain encrypted identity registry for KYC or compliance platforms
 
 ## Why this example

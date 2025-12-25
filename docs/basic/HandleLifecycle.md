@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Intermediate | **Chapters**: Handles | **Concept**: Store encrypted handles and reuse them across calls
 
+> 📚 [View API Reference](../reference/basic/HandleLifecycle.md)
+
 Show how encrypted handles can be stored and reused safely.
 
 ## Why this example

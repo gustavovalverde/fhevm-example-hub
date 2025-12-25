@@ -2,6 +2,8 @@
 
 > **Category**: Identity | **Difficulty**: Intermediate | **Chapters**: Erc7984 | **Concept**: ERC7984ObserverAccess for opt-in audit / compliance observers
 
+> 📚 [View API Reference](../reference/identity/ERC7984ObserverAccessExample.md)
+
 Travel-Rule style observer access for confidential token balances and transfer amounts
 
 ## Why this example

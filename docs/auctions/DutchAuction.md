@@ -2,6 +2,8 @@
 
 > **Category**: Auctions | **Difficulty**: Intermediate | **Chapters**: Auctions | **Concept**: Dutch auction with descending price and encrypted reserve
 
+> 📚 [View API Reference](../reference/auctions/DutchAuction.md)
+
 Dutch auction with descending price and encrypted reserve.
 
 ## Why this example

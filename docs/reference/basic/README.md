@@ -1,5 +1,11 @@
 # Basic Reference
 
+API documentation for Basic contracts.
+
+> 📖 For tutorials, see [Basic Examples](../../basic/README.md).
+
+## Contracts
+
 - [AntiPatternMissingAllowThis](./AntiPatternMissingAllowThis.md)
 - [AntiPatternMissingUserAllow](./AntiPatternMissingUserAllow.md)
 - [AntiPatternViewOnEncrypted](./AntiPatternViewOnEncrypted.md)
@@ -17,4 +23,3 @@
 - [PublicDecryptSingleValue](./PublicDecryptSingleValue.md)
 - [UserDecryptMultipleValues](./UserDecryptMultipleValues.md)
 - [UserDecryptSingleValue](./UserDecryptSingleValue.md)
-

@@ -2,6 +2,8 @@
 
 > **Category**: Identity | **Difficulty**: Intermediate | **Chapters**: Access Control | **Concept**: User-controlled FHE.allow() permissions
 
+> 📚 [View API Reference](../reference/identity/AccessControlGrants.md)
+
 Demonstrates user-controlled FHE.allow() permission patterns
 
 ## Why this example

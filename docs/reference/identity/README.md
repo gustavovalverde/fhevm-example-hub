@@ -1,5 +1,11 @@
 # Identity Reference
 
+API documentation for Identity contracts.
+
+> 📖 For tutorials, see [Identity Examples](../../identity/README.md).
+
+## Contracts
+
 - [AccessControlGrants](./AccessControlGrants.md)
 - [ComplianceRules](./ComplianceRules.md)
 - [CompliantERC20](./CompliantERC20.md)
@@ -15,7 +21,7 @@
 - [TransientAccessControl](./TransientAccessControl.md)
 - [VestingWalletConfidentialExample](./VestingWalletConfidentialExample.md)
 
-## Subsections
+## Helpers & Mocks
 
 - [Helpers](./helpers/README.md)
 - [Mocks](./mocks/README.md)

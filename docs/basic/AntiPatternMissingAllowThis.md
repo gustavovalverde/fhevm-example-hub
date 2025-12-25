@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Intermediate | **Chapters**: Anti Patterns | **Concept**: Missing FHE.allowThis breaks reuse of stored handles
 
+> 📚 [View API Reference](../reference/basic/AntiPatternMissingAllowThis.md)
+
 Demonstrates the pitfall of omitting FHE.allowThis on stored values.
 
 ## Why this example

@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Beginner | **Chapters**: Basics | **Concept**: Encrypted counter using FHE.add and FHE.sub
 
+> 📚 [View API Reference](../reference/basic/FHECounter.md)
+
 Encrypted counter with increment and decrement operations.
 
 ## Why this example

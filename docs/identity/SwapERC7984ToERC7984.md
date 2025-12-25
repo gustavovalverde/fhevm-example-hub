@@ -2,6 +2,8 @@
 
 > **Category**: Identity | **Difficulty**: Intermediate | **Chapters**: Erc7984, Swaps | **Concept**: ERC7984 → ERC7984 swap using FHE.allowTransient across token contracts (KYC is public)
 
+> 📚 [View API Reference](../reference/identity/SwapERC7984ToERC7984.md)
+
 Swap one confidential ERC7984 token for another using transient permissions
 
 ## Why this example

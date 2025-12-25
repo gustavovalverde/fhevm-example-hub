@@ -2,6 +2,8 @@
 
 > **Category**: Basic | **Difficulty**: Beginner | **Chapters**: Encryption | **Concept**: Store multiple encrypted values with a single proof
 
+> 📚 [View API Reference](../reference/basic/EncryptMultipleValues.md)
+
 Store multiple encrypted values in one transaction.
 
 ## Why this example
