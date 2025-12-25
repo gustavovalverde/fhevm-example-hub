@@ -149,6 +149,77 @@ fhevm-example-hub/
 └── output/                           # Generated standalone examples
 ```
 
+## Documentation Architecture
+
+This project uses a **NatSpec-driven documentation system** that auto-generates docs from contract comments. This ensures documentation never drifts from code.
+
+### NatSpec Custom Tags
+
+Each contract uses [Solidity NatSpec](https://docs.soliditylang.org/en/latest/natspec-format.html) annotations with custom tags that our tooling parses:
+
+```solidity
+/**
+ * @title EncryptedAgeVerification
+ * @notice Demonstrates FHE age threshold verification without revealing actual age
+ * @dev Example for fhEVM Examples - Identity Category
+ *
+ * @custom:category identity
+ * @custom:chapter comparisons
+ * @custom:concept FHE comparison (le, ge) for threshold checks
+ * @custom:difficulty beginner
+ * @custom:depends-on IdentityRegistry,ComplianceRules
+ * @custom:deploy-plan [{"contract":"Helper"},{"contract":"Main","args":["@Helper"]}]
+ */
+contract EncryptedAgeVerification { ... }
+```
+
+| Tag | Purpose |
+|-----|---------|
+| `@custom:category` | Groups examples (basic, identity, auctions, games) |
+| `@custom:chapter` | Topic for GitBook navigation (comparisons, decryption, etc.) |
+| `@custom:concept` | One-line description for tables and listings |
+| `@custom:difficulty` | Skill level (beginner, intermediate, advanced) |
+| `@custom:depends-on` | Other contracts this example requires |
+| `@custom:deploy-plan` | JSON deployment sequence for standalone generation |
+
+### solidity-docgen + Handlebars
+
+We use [solidity-docgen](https://github.com/OpenZeppelin/solidity-docgen) with custom [Handlebars](https://handlebarsjs.com/) templates to generate reference docs:
+
+```
+templates/
+├── contract.hbs   # Per-contract markdown with NatSpec fields
+└── page.hbs       # Page wrapper template
+```
+
+The `contract.hbs` template extracts NatSpec custom tags and renders them as metadata:
+
+```handlebars
+# {{name}}
+
+{{#if natspec.custom}}
+> **Category**: {{natspec.custom.category}} | **Difficulty**: {{natspec.custom.difficulty}}
+{{/if}}
+
+## Overview
+{{{natspec.notice}}}
+```
+
+This produces consistent documentation that automatically includes category, difficulty, and concept metadata from the contract itself.
+
+### Documentation Pipeline
+
+```bash
+npm run docs          # Full pipeline: solidity-docgen + GitBook generation
+npm run docs:one      # Single example docs
+npm run docs:ref      # Reference docs only (solidity-docgen)
+```
+
+The pipeline:
+1. **solidity-docgen** parses contracts and generates `docs/reference/` using Handlebars templates
+2. **generate-gitbook.ts** reads contracts, extracts NatSpec, and creates GitBook pages with code tabs
+3. **generate-summary.ts** builds `docs/SUMMARY.md` for GitBook navigation
+
 ## Generated Outputs
 
 - `docs/reference/`, `docs/<category>/`, `docs/SUMMARY.md`, and `docs/catalog.json` are generated and committed for publishing.
@@ -205,3 +276,6 @@ MIT
 ## Resources
 
 - [Zama fhEVM Documentation](https://docs.zama.ai/fhevm)
+- [Solidity NatSpec Format](https://docs.soliditylang.org/en/latest/natspec-format.html) - Documentation comment standard
+- [solidity-docgen](https://github.com/OpenZeppelin/solidity-docgen) - OpenZeppelin's doc generator
+- [OpenZeppelin Confidential Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/confidential) - ERC7984 reference
