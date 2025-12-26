@@ -3,6 +3,7 @@ import path from "node:path";
 
 import type { DeployArg, DeployStep } from "./deploy-script-generators";
 import { type ExampleMeta, loadExampleRegistry } from "./example-registry";
+import { titleCase } from "./lib/text-utils";
 
 const rootDir = path.resolve(__dirname, "..");
 const docsDir = path.join(rootDir, "docs");
@@ -48,14 +49,6 @@ function writeDoc(relPath: string, content: string): void {
   const fullPath = path.join(docsDir, relPath);
   ensureDir(path.dirname(fullPath));
   fs.writeFileSync(fullPath, `${content.trimEnd()}\n`);
-}
-
-function titleCase(value: string): string {
-  if (value.length === 0) return value;
-  return value
-    .split(/[-_\s]+/g)
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
 }
 
 function readFile(filePath: string): string {

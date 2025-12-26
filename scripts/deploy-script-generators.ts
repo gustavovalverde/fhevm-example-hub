@@ -54,10 +54,7 @@ function normalizePlan(config: DeployScriptConfig): DeployStep[] {
   return [{ contract: config.contract.replace(/\.sol$/u, "") }];
 }
 
-export function generateDeployScriptForExample(
-  _exampleName: string,
-  config: DeployScriptConfig,
-): string {
+export function generateDeployScriptForExample(config: DeployScriptConfig): string {
   const plan = normalizePlan(config);
   const varNames = new Map<string, string>();
 

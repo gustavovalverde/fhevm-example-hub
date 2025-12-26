@@ -11,6 +11,8 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 
+import { titleCase } from "./lib/text-utils";
+
 const rootDir = path.resolve(__dirname, "..");
 const docsDir = path.join(rootDir, "docs");
 
@@ -51,17 +53,6 @@ function getTitleFromFile(filePath: string, fallback: string): string {
   } catch {
     return fallback;
   }
-}
-
-/**
- * Convert a string to title case
- */
-function titleCase(value: string): string {
-  if (value.length === 0) return value;
-  return value
-    .split(/[-_\s]+/g)
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
 }
 
 /**
